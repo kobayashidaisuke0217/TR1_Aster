@@ -1,6 +1,7 @@
 #include "Astar.h"
 #include"Novice.h"
 bool isValid(int x, int y, int width, int height) {
+    //進行先がマップ内かどうか
     return (x >= 0 && x < width && y >= 0 && y < height);
 }
 
@@ -10,12 +11,13 @@ int calculateH(int x, int y, int targetX, int targetY) {
 }
 
 std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int startX, int startY, int targetX, int targetY) {
+   //マップの幅
     int width =(int) grid[0].size();
     int height =(int) grid.size();
     
     std::vector<std::vector<bool>> visited(width, std::vector<bool>(height, false));
     std::priority_queue<Node*, std::vector<Node*>, Astar> openList;
-
+    //スタート位置
     Node* startNode = new Node(startX, startY, 0, calculateH(startX, startY, targetX, targetY), nullptr);
     openList.push(startNode);
 
@@ -44,12 +46,21 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int start
             int nextX = current->x + dx[i];
             int nextY = current->y + dy[i];
 
-            if (isValid(nextX, nextY, width, height) && !visited[nextX][nextY] && grid[nextY][nextX] == 1) {
-                int g = current->g + 1;
-                int h = calculateH(nextX, nextY, targetX, targetY);
-                Node* nextNode = new Node(nextX, nextY, g, h, current);
-                openList.push(nextNode);
-                visited[nextX][nextY] = true;
+            if (isValid(nextX, nextY, width, height) && !visited[nextX][nextY]) {
+                if (grid[nextY][nextX] == 1) {
+                    int g = current->g + 1;
+                    int h = calculateH(nextX, nextY, targetX, targetY);
+                    Node* nextNode = new Node(nextX, nextY, g, h, current);
+                    openList.push(nextNode);
+                    visited[nextX][nextY] = true;
+                }
+                else if (grid[nextY][nextX] == 2) {
+                    int g = current->g + 2;
+                    int h = calculateH(nextX, nextY, targetX, targetY);
+                    Node* nextNode = new Node(nextX, nextY, g, h, current);
+                    openList.push(nextNode);
+                    visited[nextX][nextY] = true;
+                }
             }
         }
     }
