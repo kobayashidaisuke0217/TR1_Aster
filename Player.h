@@ -1,16 +1,18 @@
 #pragma once
 #include"Vector2.h"
 #include "map.h"
-class Map;
+
 class Player
 {
 public:
 	Player(Vector2 pos);
 	
 	void Init();
-	void Update(char* keys, Map* map);
+	void Update(char* keys/*, Map* map*/);
 	void Draw();
 	void Move(const Vector2 velocity);
+	Vector2 GetPos() { return pos_; }
+	float GetSize() { return size_; }
 private:
 
 	Vector2 pos_;

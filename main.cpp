@@ -1,15 +1,24 @@
 #include <Novice.h>
 #include "map.h"
 #include "Player.h"
+#include "Astar.h"
 const char kWindowTitle[] = "LE2B_12_コバヤシダイスケ";
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-
+	Map* map = new Map();
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
-	Map* map = new Map();
+	
 	Player* player = new Player({64, 64});
+	int playerX = (int)player->GetPos().x / 64;
+	int playerY = (int)player->GetPos().y / 64;
+	//Vector2 Enemypos = { (float)5*64,(float)5*64};
+	int serchCount = 60;
+	//int moveCount = 0;
+	int enemyX = 5;
+	int enemyY = 5;
+	std::vector<Node*> path;
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -26,7 +35,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		player->Update(keys,map);
+		path = findPath(map->map, enemyX, enemyY, playerX, playerY);
+		player->Update(keys);
+		playerX = (int)player->GetPos().x / 64;
+		playerY = (int)player->GetPos().y / 64;
+		
+		
+		 if (playerX != enemyX || playerY != enemyY) {
+			
+			 serchCount--;
+			 // プレイヤーの移動
+			 if (serchCount<=0&&!path.empty()) {
+				// playerX = path[1]->x;
+				 //playerY = path[1]->y;
+				 enemyX = path[1]->x;
+				 enemyY = path[1]->y;
+				 // パスを更新
+				 path.erase(path.begin(), path.begin() + 1);
+				 serchCount = 60;
+			 }
+			 
+		 }
 		///
 		/// ↑更新処理ここまで
 		///
@@ -34,7 +63,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		map->Draw();
+		//map->Draw();
+		 for (int i = 0; i <map-> map.size(); i++) {
+			 for (int j = 0; j <map-> map[i].size(); j++) {
+				 if (map->map[i][j] == 0) {
+					 Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeSolid);
+				 }
+			 }
+		 }
+		for (const auto& node : path) {
+			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
+		}
+		 Novice::DrawBox(enemyX*64, enemyY*64, 64, 64, 0, RED, kFillModeSolid);
+		 Novice::ScreenPrintf(650, 20, "%d", playerX);
+			 Novice::ScreenPrintf(650, 40, "%d", playerY);
+
+			 Novice::ScreenPrintf(900, 20, "%d", map->map[playerY][playerX]);
+			 Novice::ScreenPrintf(850, 40, "%d", map->map.size());
+			 Novice::ScreenPrintf(850, 20, "%d", map->map[0].size());
 		player->Draw();
 		///
 		/// ↑描画処理ここまで
