@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int playerX = (int)player->GetPos().x / 64;
 	int playerY = (int)player->GetPos().y / 64;
 	//Vector2 Enemypos = { (float)5*64,(float)5*64};
-	int serchCount = 0;
+	
 	int moveCount = 30;
 	int enemyX = 12;
 	int enemyY = 10;
@@ -36,8 +36,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 	
-			path = findPath(map->map, enemyX, enemyY, playerX, playerY);
-			serchCount = 120;
+			
+		
 		
 		player->Update(keys);
 		playerX = (int)player->GetPos().x / 64;
@@ -45,8 +45,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		
 		 if (playerX != enemyX || playerY != enemyY) {
-			
-			 moveCount--;
+			 
+				 path = findPath(map->map, enemyX, enemyY, playerX, playerY);
+				moveCount--;
 			 // プレイヤーの移動
 			 if (moveCount<=0&&!path.empty()) {
 				
@@ -58,7 +59,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					 moveCount = 30;
 				 }
 				 else if (map->map[enemyY][enemyX] == 2) {
-					 moveCount = 60;
+					 moveCount = 90;
 				 }
 			 }
 			 

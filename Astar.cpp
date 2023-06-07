@@ -5,8 +5,8 @@ bool isValid(int x, int y, int width, int height) {
     return (x >= 0 && x < width && y >= 0 && y < height);
 }
 
-int calculateH(int x, int y, int targetX, int targetY) {
-    // マンハッタン距離を使ったヒューリスティック関数の例
+int calcH(int x, int y, int targetX, int targetY) {
+    // マンハッタン距離を使ったヒューリスティック関数
     return std::abs(x - targetX) + std::abs(y - targetY);
 }
 
@@ -18,7 +18,7 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int start
     std::vector<std::vector<bool>> visited(width, std::vector<bool>(height, false));
     std::priority_queue<Node*, std::vector<Node*>, Astar> openList;
     //スタート位置
-    Node* startNode = new Node(startX, startY, 0, calculateH(startX, startY, targetX, targetY), nullptr);
+    Node* startNode = new Node(startX, startY, 0, calcH(startX, startY, targetX, targetY), nullptr);
     openList.push(startNode);
 
     while (!openList.empty()) {
@@ -38,7 +38,7 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int start
 
         visited[current->x][current->y] = true;
 
-        // 上下左右の移動を考慮する場合
+        // 上下左右の移動
         int dx[] = { 0, 0, -1, 1 };
         int dy[] = { -1, 1, 0, 0 };
 
@@ -49,14 +49,14 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int start
             if (isValid(nextX, nextY, width, height) && !visited[nextX][nextY]) {
                 if (grid[nextY][nextX] == 1) {
                     int g = current->g + 1;
-                    int h = calculateH(nextX, nextY, targetX, targetY);
+                    int h = calcH(nextX, nextY, targetX, targetY);
                     Node* nextNode = new Node(nextX, nextY, g, h, current);
                     openList.push(nextNode);
                     visited[nextX][nextY] = true;
                 }
                 else if (grid[nextY][nextX] == 2) {
-                    int g = current->g + 2;
-                    int h = calculateH(nextX, nextY, targetX, targetY);
+                    int g = current->g + 3;
+                    int h = calcH(nextX, nextY, targetX, targetY);
                     Node* nextNode = new Node(nextX, nextY, g, h, current);
                     openList.push(nextNode);
                     visited[nextX][nextY] = true;

@@ -26,5 +26,5 @@ public:
 
 bool isValid(int x, int y, int width, int height);
 
-int calculateH(int x, int y, int targetX, int targetY);
+int calcH(int x, int y, int targetX, int targetY);
 std::vector<Node*> findPath(const std::vector<std::vector<int>>& grid, int startX, int startY, int targetX, int targetY);

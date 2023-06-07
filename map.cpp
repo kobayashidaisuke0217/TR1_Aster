@@ -14,6 +14,7 @@ void Map::Draw()
 			}
 			if (map[i][j] == 2) {
 				Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeWireFrame);
+				Novice::DrawLine(j *64, i * 64, j * 64 + 64, i * 64 + 64, BLACK);
 			}
 		}
 	}
