@@ -41,7 +41,8 @@ void Player::Update(char* keys)
 	pos_.x += speed_.x;
 	pos_.y += speed_.y;
 	speed_ = { 0,0 };
-	
+	playerX = (int)pos_.x / 64;
+	playerY = (int)pos_.y / 64;
 }
 
 void Player::Draw()

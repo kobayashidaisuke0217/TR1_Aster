@@ -1,7 +1,7 @@
 #include <Novice.h>
 #include "map.h"
 #include "Player.h"
-#include "Astar.h"
+#include "Enemy.h"
 const char kWindowTitle[] = "LE2B_12_コバヤシダイスケ";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -14,11 +14,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int playerX = (int)player->GetPos().x / 64;
 	int playerY = (int)player->GetPos().y / 64;
 	//Vector2 Enemypos = { (float)5*64,(float)5*64};
-	
-	int moveCount = 30;
-	int enemyX = 12;
-	int enemyY = 10;
-	std::vector<Node*> path;
+	Enemy* enemy = new Enemy(12, 10);
+	enemy->SetMap(map);
+	enemy->SetPlayer(player);
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -40,30 +38,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		
 		player->Update(keys);
-		playerX = (int)player->GetPos().x / 64;
-		playerY = (int)player->GetPos().y / 64;
+	
 		
 		
-		 if (playerX != enemyX || playerY != enemyY) {
-			 
-				 path = findPath(map->map, enemyX, enemyY, playerX, playerY);
-				moveCount--;
-			 // プレイヤーの移動
-			 if (moveCount<=0&&!path.empty()) {
-				
-				 enemyX = path[1]->x;
-				 enemyY = path[1]->y;
-				 // パスを更新
-				 path.erase(path.begin(), path.begin() + 1);
-				 if (map->map[enemyY][enemyX] == 1) {
-					 moveCount = 30;
-				 }
-				 else if (map->map[enemyY][enemyX] == 2) {
-					 moveCount = 90;
-				 }
-			 }
-			 
-		 }
+		enemy->Update();
 		///
 		/// ↑更新処理ここまで
 		///
@@ -72,17 +50,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 		map->Draw();
-		/* for (int i = 0; i <map-> map.size(); i++) {
-			 for (int j = 0; j <map-> map[i].size(); j++) {
-				 if (map->map[i][j] == 0) {
-					 Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeSolid);
-				 }
-			 }
-		 }*/
-		for (const auto& node : path) {
-			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
-		}
-		 Novice::DrawBox(enemyX*64, enemyY*64, 64, 64, 0, RED, kFillModeSolid);
+		enemy->Draw();
+
 		 Novice::ScreenPrintf(650, 20, "%d", playerX);
 			 Novice::ScreenPrintf(650, 40, "%d", playerY);
 

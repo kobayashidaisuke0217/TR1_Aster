@@ -1,10 +1,6 @@
 #include "map.h"
 #include "Novice.h"
-//void Map::Initialize()
-//{
-//	
-//}
-//
+
 void Map::Draw()
 {
 	for (int i = 0; i < map.size(); i++) {

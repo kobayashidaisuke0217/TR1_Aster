@@ -13,8 +13,11 @@ public:
 	void Move(const Vector2 velocity);
 	Vector2 GetPos() { return pos_; }
 	float GetSize() { return size_; }
+	int GetPlayerX() { return playerX; }
+	int GetPlayerY() { return playerY; }
 private:
-
+	int playerX;
+	int playerY;
 	Vector2 pos_;
 	Vector2 initPos_;
 	Vector2 speed_;
