@@ -44,6 +44,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
@@ -121,5 +124,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Astar.h" />
+    <ClInclude Include="EnemyState.h" />
   </ItemGroup>
 </Project>

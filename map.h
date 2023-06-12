@@ -7,10 +7,12 @@ public:
 	
 	void Draw();
 	Map();
-	
+	void Update(char* keys, char* preKeys);
 
 	std::vector<std::vector<int>>  map;
-	
+	std::vector<std::vector<int>>  map2;
 	 const int mapSize = 64;
+	 int mapNum = 1;
+	 int mapTP;
 };
 

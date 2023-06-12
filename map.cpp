@@ -3,14 +3,29 @@
 
 void Map::Draw()
 {
-	for (int i = 0; i < map.size(); i++) {
-		for (int j = 0; j < map[i].size(); j++) {
-			if (map[i][j] == 0) {
-				Novice::DrawBox(j * 64, i * 64,64,64,0, BLACK,kFillModeSolid);
+	if (mapNum == 0) {
+		for (int i = 0; i < map.size(); i++) {
+			for (int j = 0; j < map[i].size(); j++) {
+				if (map[i][j] == 0) {
+					Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeSolid);
+				}
+				else if (map[i][j] == 2) {
+					Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeWireFrame);
+					Novice::DrawLine(j * 64, i * 64, j * 64 + 64, i * 64 + 64, BLACK);
+				}
 			}
-			if (map[i][j] == 2) {
-				Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeWireFrame);
-				Novice::DrawLine(j *64, i * 64, j * 64 + 64, i * 64 + 64, BLACK);
+		}
+	}
+	else if (mapNum == 1) {
+		for (int i = 0; i < map2.size(); i++) {
+			for (int j = 0; j < map2[i].size(); j++) {
+				if (map2[i][j] == 0) {
+					Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeSolid);
+				}
+				else if (map2[i][j] == 2) {
+					Novice::DrawBox(j * 64, i * 64, 64, 64, 0, BLACK, kFillModeWireFrame);
+					Novice::DrawLine(j * 64, i * 64, j * 64 + 64, i * 64 + 64, BLACK);
+				}
 			}
 		}
 	}
@@ -31,4 +46,29 @@ Map::Map()
 		{0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
   };
+  map2 = {
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+	   {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,1,2,2,2,2,0,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,1,1,0,1,0,0,0,0,0,1,1,1,1,1,1,1,0},
+	   {0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+	   {0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0},
+	   {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  };
+}
+
+void Map::Update(char*keys,char* preKeys)
+{
+	if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
+		if (mapNum == 0) {
+			mapNum = 1;
+		}
+		else if (mapNum == 1) {
+			mapNum = 0;
+		}
+	}
 }

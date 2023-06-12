@@ -13,18 +13,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 	
 	Player* player = new Player({64, 64});
-	int playerX = (int)player->GetPos().x / 64;
-	int playerY = (int)player->GetPos().y / 64;
+	
 	//Vector2 Enemypos = { (float)5*64,(float)5*64};
 	Enemy* enemy = new Enemy(12, 10);
+	
 	enemy->SetMap(map);
 	enemy->SetPlayer(player);
-	
+	enemy->Init();
 	///std::thread thread(&Enemy::Update,&enemy);
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 	
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -39,11 +40,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 	
 			
-		
+		map->Update(keys, preKeys);
 		
 		player->Update(keys);
 	
-		//thread.join();
 		enemy->Update();
 		///
 		/// ↑更新処理ここまで
@@ -55,12 +55,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		map->Draw();
 		enemy->Draw();
 
-		 Novice::ScreenPrintf(650, 20, "%d", playerX);
-			 Novice::ScreenPrintf(650, 40, "%d", playerY);
-
-			 Novice::ScreenPrintf(900, 20, "%d", map->map[playerY][playerX]);
-			 Novice::ScreenPrintf(850, 40, "%d", map->map.size());
-			 Novice::ScreenPrintf(850, 20, "%d", map->map[0].size());
+		 
 		player->Draw();
 
 		
@@ -79,6 +74,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	delete map;
 	delete player;
+	delete enemy;
 	// ライブラリの終了
 	Novice::Finalize();
 	return 0;

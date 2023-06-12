@@ -7,36 +7,30 @@ Enemy::Enemy(int EnemyX, int EnemyY)
 	this->enemyY_ = EnemyY;
 	player_ = nullptr;
 	map_ = nullptr;
+	state_ = nullptr;
 }
-
+void Enemy::Init() {
+	state_ = new EnemyStateChase();
+	state_->Init(this, player_, map_);
+}
 void Enemy::Update()
 {
-	if (player_->GetPlayerX() != enemyX_ || player_->GetPlayerY() != enemyY_) {
-
-		path_ = findPath(map_->map, enemyX_, enemyY_, player_->GetPlayerX(),player_->GetPlayerY() );
-		moveCount--;
-		// プレイヤーの移動
-		if (moveCount <= 0 && !path_.empty()) {
-
-			enemyX_ = path_[1]->x;
-			enemyY_ = path_[1]->y;
-			// パスを更新
-			path_.erase(path_.begin(), path_.begin() + 1);
-			if (map_->map[enemyY_][enemyX_] == 1) {
-				moveCount = 30;
-			}
-			else if (map_->map[enemyY_][enemyX_] == 2) {
-				moveCount = 80;
-			}
-		}
-
-	}
+	state_->Update();
 }
 
 void Enemy::Draw()
 {
-	for (const auto& node : path_) {
-		Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
+	if (enemyMapNum == map_->mapNum) {
+		for (const auto& node : path_) {
+			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
+		}
+		Novice::DrawBox(enemyX_ * 64, enemyY_ * 64, 64, 64, 0, RED, kFillModeSolid);
 	}
-	Novice::DrawBox(enemyX_ * 64, enemyY_ * 64, 64, 64, 0, RED, kFillModeSolid);
+}
+
+void Enemy::ChangeEnemyState(EnemyState* enemyState)
+{
+	delete state_;
+	state_ = enemyState;
+	state_->Init(this,player_,map_);
 }
