@@ -6,6 +6,8 @@ Player::Player(Vector2 pos)
 	pos_ = pos;
 	size_ = 32;
 	speed_ = { 0,0 };
+	playerX = 0;
+	playerY = 0;
 }
 void Player::Init() {
 	pos_ = initPos_;

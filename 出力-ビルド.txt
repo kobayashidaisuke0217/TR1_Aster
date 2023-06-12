@@ -1,0 +1,27 @@
+﻿ビルドを開始しました...
+1>------ ビルド開始: プロジェクト: TR1_Aster, 構成: Debug x64 ------
+1>Enemy.cpp
+1>main.cpp
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(55,14): error C2672: 'invoke': 一致するオーバーロードされた関数が見つかりませんでした。 (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\type_traits(1568,19): message : 'unknown-type std::invoke(_Callable &&,_Ty1 &&,_Types2 &&...) noexcept(<expr>)' の可能性があります (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(55,14): message : 'unknown-type std::invoke(_Callable &&,_Ty1 &&,_Types2 &&...) noexcept(<expr>)': 3 引数が必要です - 1 が指定されました (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\type_traits(1562,19): message : または 'unknown-type std::invoke(_Callable &&) noexcept(<expr>)' (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(55,14): message : 関数テンプレート 'unknown-type std::invoke(_Callable &&) noexcept(<expr>)' の特定に失敗しました (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(55,14): message : 次のテンプレート引数で: (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(55,14): message : '_Callable=Enemy **') (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(62,9): message : コンパイル対象の関数 テンプレート インスタンス化 'unsigned int std::thread::_Invoke<_Tuple,0>(void *) noexcept' のリファレンスを確認してください (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(68): message : コンパイル対象の関数 テンプレート インスタンス化 'unsigned int (__cdecl *std::thread::_Get_invoke<_Tuple,0>(std::integer_sequence<size_t,0>) noexcept)(void *) noexcept' のリファレンスを確認してください (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\thread(87): message : コンパイル対象の関数 テンプレート インスタンス化 'void std::thread::_Start<_Ty,>(_Fn &&)' のリファレンスを確認してください
+1>        with
+1>        [
+1>            _Ty=Enemy **,
+1>            _Fn=Enemy **
+1>        ] (ソース ファイルをコンパイルしています main.cpp)
+1>C:\Desktop\LE2B\TR3\TR1_Aster\main.cpp(23,27): message : コンパイル対象の関数 テンプレート インスタンス化 'std::thread::thread<Enemy**,,0>(_Fn &&)' のリファレンスを確認してください
+1>        with
+1>        [
+1>            _Fn=Enemy **
+1>        ]
+1>プロジェクト "TR1_Aster.vcxproj" のビルドが終了しました -- 失敗。
+========== ビルド: 成功 0、失敗 1、最新の状態 0、スキップ 0 ==========
+========== ビルド は 10:58 AM に開始され、02.444 秒 かかりました ==========

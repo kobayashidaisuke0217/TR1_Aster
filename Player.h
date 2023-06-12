@@ -16,8 +16,8 @@ public:
 	int GetPlayerX() { return playerX; }
 	int GetPlayerY() { return playerY; }
 private:
-	int playerX;
-	int playerY;
+	int playerX=0;
+	int playerY=0;
 	Vector2 pos_;
 	Vector2 initPos_;
 	Vector2 speed_;

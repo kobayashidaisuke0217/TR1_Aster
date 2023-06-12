@@ -2,6 +2,8 @@
 #include "map.h"
 #include "Player.h"
 #include "Enemy.h"
+#include <imgui.h>
+#include<thread>
 const char kWindowTitle[] = "LE2B_12_コバヤシダイスケ";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -17,10 +19,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Enemy* enemy = new Enemy(12, 10);
 	enemy->SetMap(map);
 	enemy->SetPlayer(player);
+	
+	///std::thread thread(&Enemy::Update,&enemy);
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
-
+	
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -39,8 +43,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		player->Update(keys);
 	
-		
-		
+		//thread.join();
 		enemy->Update();
 		///
 		/// ↑更新処理ここまで
@@ -59,6 +62,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			 Novice::ScreenPrintf(850, 40, "%d", map->map.size());
 			 Novice::ScreenPrintf(850, 20, "%d", map->map[0].size());
 		player->Draw();
+
+		
+
 		///
 		/// ↑描画処理ここまで
 		///

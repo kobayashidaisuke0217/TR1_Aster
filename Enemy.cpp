@@ -5,6 +5,8 @@ Enemy::Enemy(int EnemyX, int EnemyY)
 {
 	this->enemyX_ = EnemyX;
 	this->enemyY_ = EnemyY;
+	player_ = nullptr;
+	map_ = nullptr;
 }
 
 void Enemy::Update()
@@ -24,7 +26,7 @@ void Enemy::Update()
 				moveCount = 30;
 			}
 			else if (map_->map[enemyY_][enemyX_] == 2) {
-				moveCount = 90;
+				moveCount = 80;
 			}
 		}
 
