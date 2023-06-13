@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 	
 	Player* player = new Player({64, 64});
-	
+	player->SetMap(map);
 	//Vector2 Enemypos = { (float)5*64,(float)5*64};
 	Enemy* enemy = new Enemy(12, 10);
 	
@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		 
 		player->Draw();
-
+		//Novice::ScreenPrintf(100, 100, "%d", map->mapNum);
 		
 
 		///

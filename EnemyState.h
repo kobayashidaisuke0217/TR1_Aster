@@ -19,9 +19,10 @@ class EnemyStateChase : public EnemyState {
 	void Update();
 	void Init(Enemy* enemy,Player*player,Map*map);
 };
-//class EnemyStateStandby :public EnemyState {
-//	~EnemyStateStandby();
-//	void Update();
-//	void Init(Enemy* enemy_, Player* player, Map* map);
-//};
+class EnemyStateStandby :public EnemyState {
+	~EnemyStateStandby();
+	void Update();
+	void Init(Enemy* enemy, Player* player, Map* map);
+};
+
 

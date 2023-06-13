@@ -38,6 +38,7 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& map, int startX
             }
             //pathの値を反転して返す
             std::reverse(path.begin(), path.end());
+            Novice::ScreenPrintf(100, 100, "%d", path.size());
             return path;
         }
         
@@ -52,7 +53,7 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& map, int startX
             int nextY = current->y + dy[i];
 
             if (isValid(nextX, nextY, width, height) && visited[nextX][nextY]==0/*対象のマスが移動可能で且つまだそのノードを調べていないとき*/) {
-                if (map[nextY][nextX] == 1/*何もない地面ならば*/) {
+                if (map[nextY][nextX] == 100/*何もない地面ならば*/) {
                     //スタートからの距離にそのマス分のコストをプラスする
                     int g = current->g + 1;
                     //ゴールまでの予想距離を計算する
@@ -64,7 +65,7 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& map, int startX
                     //すでにそのノードを訪れた
                     visited[nextX][nextY] = true;
                 }
-                else if (map[nextY][nextX] == 2/*斜線が引いてあるマスならば*/) {
+                else if (map[nextY][nextX] == 101/*斜線が引いてあるマスならば*/) {
                     int g = current->g + 3;
                     int h = calcH(nextX, nextY, targetX, targetY);
                     Node* nextNode = new Node(nextX, nextY, g, h, current);

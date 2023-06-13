@@ -20,10 +20,13 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	Novice::ScreenPrintf(200, 100, "%d", warpCount);
 	if (enemyMapNum == map_->mapNum) {
 		for (const auto& node : path_) {
 			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
+			
 		}
+		
 		Novice::DrawBox(enemyX_ * 64, enemyY_ * 64, 64, 64, 0, RED, kFillModeSolid);
 	}
 }

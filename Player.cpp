@@ -19,32 +19,54 @@ void Player::Init() {
 void Player::Update(char* keys)
 {
 
-	if (keys[DIK_W]) {
+	if (keys[DIK_W]&& pos_.y >= 0) {
 		
 			speed_.y = -4;
 		
 	}
-	else if (keys[DIK_S]) {
+	else if (keys[DIK_S]&& pos_.y <= 688) {
 		
 			speed_.y = 4;
 		
 	}
-	else if (keys[DIK_A]) {
+	else if (keys[DIK_A]&&pos_.x >= 0) {
 		
 			speed_.x =- 4;
 		
 	}
 
-	else if (keys[DIK_D]) {
+	else if (keys[DIK_D]&& pos_.x <= 1248) {
 		
 			speed_.x = 4;
 		
 	}
+	
 	pos_.x += speed_.x;
 	pos_.y += speed_.y;
 	speed_ = { 0,0 };
 	playerX = (int)pos_.x / 64;
 	playerY = (int)pos_.y / 64;
+	if (map_->mapNum == 0) {
+		if (map_->map[playerY][playerX] != 99 && map_->map[playerY][playerX] != 100 && map_->map[playerY][playerX] != 101) {
+			map_->mapNum = map_->map[playerY][playerX];
+			map_->changeFlag = true;
+			pos_ = { 70,70 };
+		}
+	}
+	else if (map_->mapNum == 1) {
+		if (map_->map2[playerY][playerX] != 99 && map_->map2[playerY][playerX] != 100 && map_->map2[playerY][playerX] != 101) {
+			map_->mapNum = map_->map2[playerY][playerX];
+			map_->changeFlag = true;
+			pos_ = { 70,70 };
+		}
+	}
+	else if (map_->mapNum == 2) {
+		if (map_->map3[playerY][playerX] != 99 && map_->map3[playerY][playerX] != 100 && map_->map3[playerY][playerX] != 101) {
+			map_->mapNum = map_->map3[playerY][playerX];
+			map_->changeFlag = true;
+			pos_ = { 70,70 };
+		}
+	}
 }
 
 void Player::Draw()

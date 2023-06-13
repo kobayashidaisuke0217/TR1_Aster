@@ -22,7 +22,7 @@ public :
 
 
 	int moveCount = 30;
-	
+	int chaseCount = 600;
 	Player* player_=nullptr;
 	int enemyX_ ;
 	int enemyY_ ;
@@ -30,7 +30,10 @@ public :
 	Map* map_=nullptr;
 	int enemyMapNum = 1;
 	EnemyState* state_;
-    
+	int warpCount;
+	int warpPointX, warpPointY;
+	bool warpFlag = false;
+
 };
 
 
