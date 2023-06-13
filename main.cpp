@@ -40,7 +40,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 		map->Update(keys, preKeys);
 		
-		player->Update(keys);
+		player->Update(keys,preKeys);
 	
 		enemy->Update();
 		///

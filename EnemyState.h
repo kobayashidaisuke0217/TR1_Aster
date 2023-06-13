@@ -18,6 +18,9 @@ class EnemyStateChase : public EnemyState {
 	~EnemyStateChase();
 	void Update();
 	void Init(Enemy* enemy,Player*player,Map*map);
+private:
+	int SwanpCount = 0;
+	int floorCount = 0;
 };
 class EnemyStateStandby :public EnemyState {
 	~EnemyStateStandby();

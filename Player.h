@@ -8,7 +8,7 @@ public:
 	Player(Vector2 pos);
 	
 	void Init();
-	void Update(char* keys/*, Map* map*/);
+	void Update(char* keys,char* preKeys);
 	void Draw();
 	void Move(const Vector2 velocity);
 	Vector2 GetPos() { return pos_; }
