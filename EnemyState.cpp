@@ -37,33 +37,6 @@ void EnemyStateChase::Update()
 			}
 
 		}
-
-
-
-
-	}
-	if (map_->changeFlag == true) {
-		int SwanpCount = 0;
-		for (const auto& node : enemy_->path_) {
-			
-			if (map_->map2[node->y][node->x] == 101) {
-				 SwanpCount+= 1;
-			}
-		}
-		int floorCount = (int)enemy_->path_.size() - SwanpCount;
-		enemy_->warpCount = floorCount * 20 + SwanpCount * 60;
-
-		map_->changeFlag = false;
-		if (enemy_->chaseCount <= enemy_->warpCount) {
-			enemy_->warpCount = 0;
-			enemy_->ChangeEnemyState(new EnemyStateStandby);
-
-		}
-		else {
-			enemy_->warpPointX = 1;//player_->GetPlayerX();
-			enemy_->warpPointY = 1;//player_->GetPlayerY();
-			enemy_->warpFlag = true;
-		}
 	}
 	if (enemy_->warpFlag == true) {
 		enemy_->warpCount--;
@@ -75,7 +48,41 @@ void EnemyStateChase::Update()
 			enemy_->warpFlag = false;
 		}
 	}
+	if (player_->mapChangeFlag == true) {
+		if (player_->preMap == enemy_->enemyMapNum) {
+			int SwanpCount = 0;
 
+			for (const auto& node : enemy_->path_) {
+
+				if (map_->map2[node->y][node->x] == 101) {
+					SwanpCount += 1;
+				}
+			}
+			int floorCount = (int)enemy_->path_.size() - SwanpCount;
+			enemy_->warpCount = floorCount * 20 + SwanpCount * 60;
+
+			player_->mapChangeFlag = false;
+			if (enemy_->chaseCount <= enemy_->warpCount) {
+				enemy_->warpCount = 0;
+				enemy_->ChangeEnemyState(new EnemyStateStandby);
+
+			}
+			else {
+				enemy_->warpPointX = 1;//player_->GetPlayerX();
+				enemy_->warpPointY = 1;//player_->GetPlayerY();
+				enemy_->warpFlag = true;
+			}
+		}
+		
+
+		else {
+			enemy_->warpCount = 0;
+			enemy_->warpFlag = false;
+			enemy_->ChangeEnemyState(new EnemyStateStandby);
+			
+		}
+	}
+	
 }
 
 void EnemyStateChase::Init(Enemy* enemy,Player*player,Map*map)

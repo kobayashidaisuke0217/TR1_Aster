@@ -13,7 +13,7 @@ void Player::Init() {
 	pos_ = initPos_;
 	
 	speed_ = { 0,0 };
-
+	preMap = map_->mapNum;
 }
 
 void Player::Update(char* keys)
@@ -48,30 +48,38 @@ void Player::Update(char* keys)
 	playerY = (int)pos_.y / 64;
 	if (map_->mapNum == 0) {
 		if (map_->map[playerY][playerX] != 99 && map_->map[playerY][playerX] != 100 && map_->map[playerY][playerX] != 101) {
+			
+			mapChangeFlag = true;
+			preMap = map_->mapNum;
 			map_->mapNum = map_->map[playerY][playerX];
-			map_->changeFlag = true;
 			pos_ = { 70,70 };
 		}
 	}
 	else if (map_->mapNum == 1) {
 		if (map_->map2[playerY][playerX] != 99 && map_->map2[playerY][playerX] != 100 && map_->map2[playerY][playerX] != 101) {
+			mapChangeFlag = true;
+			preMap = map_->mapNum;
 			map_->mapNum = map_->map2[playerY][playerX];
-			map_->changeFlag = true;
+			
 			pos_ = { 70,70 };
 		}
 	}
 	else if (map_->mapNum == 2) {
 		if (map_->map3[playerY][playerX] != 99 && map_->map3[playerY][playerX] != 100 && map_->map3[playerY][playerX] != 101) {
+			mapChangeFlag = true;
+			preMap = map_->mapNum;
 			map_->mapNum = map_->map3[playerY][playerX];
-			map_->changeFlag = true;
+			
 			pos_ = { 70,70 };
 		}
 	}
+	
 }
 
 void Player::Draw()
 {
 	Novice::DrawBox((int)pos_.x,(int) pos_.y, (int)size_, (int)size_, 0.0f, WHITE, kFillModeSolid);
+	Novice::ScreenPrintf(300, 100, "%d", preMap);
 }
 
 void Player::Move(const Vector2 velocity)

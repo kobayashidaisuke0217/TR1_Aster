@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <imgui.h>
-#include<thread>
 const char kWindowTitle[] = "LE2B_12_コバヤシダイスケ";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -20,7 +19,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	enemy->SetMap(map);
 	enemy->SetPlayer(player);
 	enemy->Init();
-	///std::thread thread(&Enemy::Update,&enemy);
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
