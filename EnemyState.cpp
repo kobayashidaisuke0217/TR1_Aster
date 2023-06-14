@@ -7,7 +7,8 @@ EnemyStateChase::~EnemyStateChase()
 void EnemyStateChase::Update()
 {
 	if (enemy_->enemyMapNum ==enemy_-> map_->mapNum) {
-		
+		floorCount = 0;
+		SwanpCount = 0;
 		if ( player_->GetPlayerX()!=enemy_->enemyX_ || player_->GetPlayerY() !=enemy_->enemyY_) {
 			if (map_->mapNum == 0) {
 				enemy_->path_ = findPath(map_->map, enemy_-> enemyX_, enemy_-> enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
@@ -37,14 +38,30 @@ void EnemyStateChase::Update()
 			}
 
 		}
-	
+		for (const auto& node : enemy_->path_) {
+			if (map_->mapNum == 0) {
+				if (map_->map[node->y][node->x] == 101) {
+					SwanpCount += 1;
+				}
+			}
+			else if (map_->mapNum == 1) {
+				if (map_->map2[node->y][node->x] == 101) {
+					SwanpCount += 1;
+				}
+			}
+			else if (map_->mapNum == 1) {
+				if (map_->map3[node->y][node->x] == 101) {
+					SwanpCount += 1;
+				}
+			}
+		}
+		
+		 floorCount = (int)enemy_->path_.size() - SwanpCount;
 	}
 	Novice::ScreenPrintf(200, 100, "%d", SwanpCount);
 	Novice::ScreenPrintf(200, 200, "%d", floorCount);
 	if (enemy_->warpFlag == true) {
 		enemy_->warpCount--;
-		floorCount = 0;
-		SwanpCount = 0;
 		if (enemy_->warpCount < 0) {
 			enemy_->enemyX_ = enemy_->warpPointX;
 			enemy_->enemyY_ = enemy_->warpPointY;
@@ -55,32 +72,12 @@ void EnemyStateChase::Update()
 	}
 	if (player_->mapChangeFlag == true) {
 		if (player_->preMap == enemy_->enemyMapNum) {
-			for (const auto& node : enemy_->path_) {
-				if (map_->mapNum == 0) {
-					if (map_->map[node->y][node->x] == 101) {
-						SwanpCount += 1;
-					}
-				}
-				else if (map_->mapNum == 1) {
-					if (map_->map2[node->y][node->x] == 101) {
-						SwanpCount += 1;
-					}
-				}
-				else if (map_->mapNum == 1) {
-					if (map_->map3[node->y][node->x] == 101) {
-						SwanpCount += 1;
-					}
-				}
-			}
-
-			floorCount = (int)enemy_->path_.size() - SwanpCount;
+		
 			enemy_->warpCount = floorCount * 20 + SwanpCount * 60;
 
 			player_->mapChangeFlag = false;
 			if (enemy_->chaseCount <= enemy_->warpCount) {
 				enemy_->warpCount = 0;
-				floorCount = 0;
-				SwanpCount = 0;
 				enemy_->ChangeEnemyState(new EnemyStateStandby);
 
 			}
