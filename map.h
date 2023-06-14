@@ -4,7 +4,6 @@
 class Map
 {
 public:
-	//void Initialize();
 	
 	void Draw();
 	Map();
