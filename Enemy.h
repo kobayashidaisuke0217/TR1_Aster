@@ -28,7 +28,7 @@ public :
 	int enemyY_ ;
 	std::vector<Node*> path_;
 	Map* map_=nullptr;
-	int enemyMapNum = 1;
+	int enemyMapNum = 2;
 	EnemyState* state_;
 	int warpCount;
 	int warpPointX, warpPointY;

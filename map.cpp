@@ -92,12 +92,15 @@ Map::Map()
 
 void Map::Update(char*keys,char* preKeys)
 {
-	if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
-		/*if (mapNum == 0) {
+	if (keys[DIK_RETURN] && preKeys[DIK_RETURN] == 0) {
+		if (mapNum == 0) {
 			mapNum = 1;
 		}
 		else if (mapNum == 1) {
+			mapNum = 2;
+		}
+		else if (mapNum == 2) {
 			mapNum = 0;
-		}*/
+		}
 	}
 }

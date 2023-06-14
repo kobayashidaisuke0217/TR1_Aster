@@ -16,7 +16,7 @@ public:
 	
 	int changeCount = 1;
 	 const int mapSize = 64;
-	 int mapNum = 1;
+	 int mapNum = 0;
 	 int mapTP;
 };
 
