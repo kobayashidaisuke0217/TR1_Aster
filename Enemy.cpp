@@ -20,6 +20,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	Novice::ScreenPrintf(300, 200, "%d", enemyMapNum);
 	Novice::ScreenPrintf(200, 100, "%d", warpCount);
 	if (enemyMapNum == map_->mapNum) {
 		for (const auto& node : path_) {

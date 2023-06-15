@@ -6,11 +6,11 @@ EnemyStateChase::~EnemyStateChase()
 
 void EnemyStateChase::Update()
 {
-	if (enemy_->enemyMapNum ==enemy_-> map_->mapNum) {
-		
-		if ( player_->GetPlayerX()!=enemy_->enemyX_ || player_->GetPlayerY() !=enemy_->enemyY_) {
+	if (enemy_->enemyMapNum == map_->mapNum) {
+
+		if (player_->GetPlayerX() != enemy_->enemyX_ || player_->GetPlayerY() != enemy_->enemyY_) {
 			if (map_->mapNum == 0) {
-				enemy_->path_ = findPath(map_->map, enemy_-> enemyX_, enemy_-> enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
 			}
 			else if (map_->mapNum == 1) {
 				enemy_->path_ = findPath(map_->map2, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
@@ -19,32 +19,50 @@ void EnemyStateChase::Update()
 			else if (map_->mapNum == 2) {
 				enemy_->path_ = findPath(map_->map3, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
 			}
-			
+
 			enemy_->moveCount--;
-			// プレイヤーの移動
+			// エネミーの移動
 			if (enemy_->moveCount <= 0 && !enemy_->path_.empty()) {
 
 				enemy_->enemyX_ = enemy_->path_[1]->x;
 				enemy_->enemyY_ = enemy_->path_[1]->y;
 				// パスを更新
 				enemy_->path_.erase(enemy_->path_.begin(), enemy_->path_.begin() + 1);
-				if (map_->map[enemy_->enemyY_][enemy_->enemyX_] == 100) {
-					enemy_->moveCount = 20;
+				if (map_->mapNum == 0) {
+					if (map_->map[enemy_->enemyY_][enemy_->enemyX_] == 100) {
+						enemy_->moveCount = 20;
+					}
+					else if (map_->map[enemy_->enemyY_][enemy_->enemyX_] == 101) {
+						enemy_->moveCount = 60;
+					}
 				}
-				else if (map_->map[enemy_->enemyY_][enemy_->enemyX_] == 101) {
-					enemy_->moveCount = 60;
+				else if (map_->mapNum == 1) {
+					if (map_->map2[enemy_->enemyY_][enemy_->enemyX_] == 100) {
+						enemy_->moveCount = 20;
+					}
+					else if (map_->map2[enemy_->enemyY_][enemy_->enemyX_] == 101) {
+						enemy_->moveCount = 60;
+					}
+				}
+				else if (map_->mapNum == 2) {
+					if (map_->map3[enemy_->enemyY_][enemy_->enemyX_] == 100) {
+						enemy_->moveCount = 20;
+					}
+					else if (map_->map3[enemy_->enemyY_][enemy_->enemyX_] == 101) {
+						enemy_->moveCount = 60;
+					}
 				}
 			}
 
 		}
-		
+
 	}
-	
+
 	if (enemy_->warpFlag == true) {
 		enemy_->warpCount--;
 		Novice::ScreenPrintf(100, 300, "%d", SwanpCount);
 		Novice::ScreenPrintf(200, 300, "%d", floorCount);
-		
+
 		if (enemy_->warpCount < 0) {
 			enemy_->enemyX_ = enemy_->warpPointX;
 			enemy_->enemyY_ = enemy_->warpPointY;
@@ -57,6 +75,8 @@ void EnemyStateChase::Update()
 	}
 	if (player_->mapChangeFlag == true) {
 		if (player_->preMap == enemy_->enemyMapNum) {
+
+
 			for (const auto& node : enemy_->path_) {
 				if (map_->mapNum == 0) {
 					if (map_->map[node->y][node->x] == 101) {
@@ -68,7 +88,7 @@ void EnemyStateChase::Update()
 						SwanpCount += 1;
 					}
 				}
-				else if (map_->mapNum == 1) {
+				else if (map_->mapNum == 2) {
 					if (map_->map3[node->y][node->x] == 101) {
 						SwanpCount += 1;
 					}
@@ -87,30 +107,31 @@ void EnemyStateChase::Update()
 
 			}
 			else {
-				enemy_->warpPointX=  player_->GetPlayerX();
-				enemy_->warpPointY= player_->GetPlayerY();
+				enemy_->warpPointX = player_->GetPlayerX();
+				enemy_->warpPointY = player_->GetPlayerY();
 				enemy_->warpFlag = true;
 			}
 		}
-		
+
 
 		else {
-			enemy_->warpCount = 0;
+
+			enemy_->warpCount = 1000;
 			floorCount = 0;
 			SwanpCount = 0;
 			enemy_->warpFlag = false;
-			enemy_->ChangeEnemyState(new EnemyStateStandby);
 			
+
 		}
 	}
-	
+
 }
 
-void EnemyStateChase::Init(Enemy* enemy,Player*player,Map*map)
+void EnemyStateChase::Init(Enemy* enemy, Player* player, Map* map)
 {
 	this->enemy_ = enemy;
 	player_ = player;
-		map_ = map;
+	map_ = map;
 
 
 }
@@ -122,9 +143,10 @@ EnemyStateStandby::~EnemyStateStandby()
 
 void EnemyStateStandby::Update()
 {
-	if (enemy_->enemyMapNum == enemy_->map_->mapNum) {
+	if (enemy_->enemyMapNum == map_->mapNum) {
 		enemy_->ChangeEnemyState(new EnemyStateChase);
 	}
+	Novice::ScreenPrintf(400, 400, "StandBy");
 }
 
 void EnemyStateStandby::Init(Enemy* enemy, Player* player, Map* map)
