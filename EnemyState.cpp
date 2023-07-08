@@ -60,8 +60,7 @@ void EnemyStateChase::Update()
 
 	if (enemy_->warpFlag == true) {
 		enemy_->warpCount--;
-		Novice::ScreenPrintf(100, 300, "%d", SwanpCount);
-		Novice::ScreenPrintf(200, 300, "%d", floorCount);
+	
 
 		if (enemy_->warpCount < 0) {
 			enemy_->enemyX_ = enemy_->warpPointX;

@@ -20,8 +20,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	Novice::ScreenPrintf(300, 200, "%d", enemyMapNum);
-	Novice::ScreenPrintf(200, 100, "%d", warpCount);
+	
 	if (enemyMapNum == map_->mapNum) {
 		for (const auto& node : path_) {
 			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
