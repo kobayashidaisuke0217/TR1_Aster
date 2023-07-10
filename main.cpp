@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <imgui.h>
+#include <chrono>
+
 const char kWindowTitle[] = "LE2B_12_コバヤシダイスケ";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -22,7 +24,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
-	
+	int frameRate = 0; // フレームレート
+	std::chrono::steady_clock::time_point startTime, endTime; // 開始時刻と終了時刻
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -36,13 +39,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-	
+		startTime = std::chrono::steady_clock::now(); // 開始時刻を記録
+
 			
 		map->Update(keys, preKeys);
 		
 		player->Update(keys,preKeys);
 	
 		enemy->Update();
+		endTime = std::chrono::steady_clock::now(); // 終了時刻を記録
+
+		std::chrono::duration<double> elapsedSeconds = endTime - startTime;
+		double frameTime = elapsedSeconds.count();
+		frameRate = static_cast<int>(1.0 / frameTime); // フレームレートを計算
+		
+		ImGui::Begin("FPS");
+		ImGui::Text("%f\r", &frameRate);
+		ImGui::End();
 		///
 		/// ↑更新処理ここまで
 		///

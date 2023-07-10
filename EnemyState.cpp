@@ -10,18 +10,46 @@ void EnemyStateChase::Update()
 
 		if (player_->GetPlayerX() != enemy_->enemyX_ || player_->GetPlayerY() != enemy_->enemyY_) {
 			if (map_->mapNum == 0) {
-				enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				if (enemy_->threadFlag == true) {
+					auto PathFin = [&]() {
+						enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+					};
+					t1 = std::thread(PathFin);
+					t1.join();
+				}
+				else {
+					enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				}
+				
 			}
 			else if (map_->mapNum == 1) {
-				enemy_->path_ = findPath(map_->map2, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
-
+				auto PathFin = [&]() {
+					enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				};
+				if (enemy_->threadFlag == true) {
+					t1 = std::thread(PathFin);
+					t1.join();
+				}
+				else {
+					enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				}
 			}
 			else if (map_->mapNum == 2) {
-				enemy_->path_ = findPath(map_->map3, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				auto PathFin = [&]() {
+					enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				};
+				if (enemy_->threadFlag == true) {
+					t1 = std::thread(PathFin);
+					t1.join();
+				}
+				else {
+					enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
+				}
 			}
 
 			enemy_->moveCount--;
 			// エネミーの移動
+			
 			if (enemy_->moveCount <= 0 && !enemy_->path_.empty()) {
 
 				enemy_->enemyX_ = enemy_->path_[1]->x;
@@ -158,3 +186,4 @@ void EnemyStateStandby::Init(Enemy* enemy, Player* player, Map* map)
 EnemyState::~EnemyState()
 {
 }
+std::thread  EnemyStateChase::t1;

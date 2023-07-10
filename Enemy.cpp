@@ -9,13 +9,29 @@ Enemy::Enemy(int EnemyX, int EnemyY)
 	map_ = nullptr;
 	state_ = nullptr;
 }
+Enemy::~Enemy() {
+	
+}
 void Enemy::Init() {
 	state_ = new EnemyStateChase();
 	state_->Init(this, player_, map_);
 }
 void Enemy::Update()
 {
-	state_->Update();
+	ImGui::Begin("flag");
+	ImGui::Checkbox("Flag", &threadFlag);
+	ImGui::End();
+	//if (threadFlag == false) {
+		state_->Update();
+	//}
+	/*else {
+		auto updateFunction = [&]() {
+			state_->Update();
+		};
+		t1 = std::thread(updateFunction);
+		t1.join();
+	}*/
+	
 }
 
 void Enemy::Draw()
@@ -29,6 +45,7 @@ void Enemy::Draw()
 		
 		Novice::DrawBox(enemyX_ * 64, enemyY_ * 64, 64, 64, 0, RED, kFillModeSolid);
 	}
+
 }
 
 void Enemy::ChangeEnemyState(EnemyState* enemyState)
@@ -36,4 +53,6 @@ void Enemy::ChangeEnemyState(EnemyState* enemyState)
 	delete state_;
 	state_ = enemyState;
 	state_->Init(this,player_,map_);
+
 }
+std::thread Enemy::t1;

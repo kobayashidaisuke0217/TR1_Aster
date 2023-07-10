@@ -13,6 +13,7 @@ protected:
 	Enemy * enemy_;
 	Player* player_;
 	Map* map_;
+
 };
 class EnemyStateChase : public EnemyState {
 	~EnemyStateChase();
@@ -21,6 +22,7 @@ class EnemyStateChase : public EnemyState {
 private:
 	int SwanpCount = 0;
 	int floorCount = 0;
+	static std::thread t1;
 };
 class EnemyStateStandby :public EnemyState {
 	~EnemyStateStandby();
