@@ -66,10 +66,15 @@ std::vector<Node*> findPath(const std::vector<std::vector<int>>& map, int startX
                     visited[nextX][nextY] = true;
                 }
                 else if (map[nextY][nextX] == 101) {
+                    //スタートからの距離にコスト分プラス
                     int g = current->g + 3;
+                    //距離を計算
                     int h = calcH(nextX, nextY, targetX, targetY);
+                    //次に調べるノードを作成
                     Node* nextNode = new Node(nextX, nextY, g, h, current);
+                    //パスの最後にノードを追加
                     openList.push(nextNode);
+                    //現在のマスを訪れたに変更
                     visited[nextX][nextY] = true;
                 }
             }

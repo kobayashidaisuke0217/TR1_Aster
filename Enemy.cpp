@@ -23,6 +23,7 @@ void Enemy::Draw()
 	
 	if (enemyMapNum == map_->mapNum) {
 		for (const auto& node : path_) {
+			//’Ê‚éŒo˜H‚ð‘S‚Ä•`‰æ
 			Novice::DrawBox(node->x * 64, node->y * 64, 64, 64, 0, RED, kFillModeWireFrame);
 			
 		}

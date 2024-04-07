@@ -9,13 +9,16 @@ void EnemyStateChase::Update()
 	if (enemy_->enemyMapNum == map_->mapNum) {
 
 		if (player_->GetPlayerX() != enemy_->enemyX_ || player_->GetPlayerY() != enemy_->enemyY_) {
+			//1マップ目
 			if (map_->mapNum == 0) {
 				enemy_->path_ = findPath(map_->map, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
 			}
+			//2マップ目
 			else if (map_->mapNum == 1) {
 				enemy_->path_ = findPath(map_->map2, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
 
 			}
+			//3マップ目
 			else if (map_->mapNum == 2) {
 				enemy_->path_ = findPath(map_->map3, enemy_->enemyX_, enemy_->enemyY_, player_->GetPlayerX(), player_->GetPlayerY());
 			}
@@ -23,11 +26,12 @@ void EnemyStateChase::Update()
 			enemy_->moveCount--;
 			// エネミーの移動
 			if (enemy_->moveCount <= 0 && !enemy_->path_.empty()) {
-
+				//エネミーの位置を次のノードの位置に
 				enemy_->enemyX_ = enemy_->path_[1]->x;
 				enemy_->enemyY_ = enemy_->path_[1]->y;
 				// パスを更新
 				enemy_->path_.erase(enemy_->path_.begin(), enemy_->path_.begin() + 1);
+				//ナップチップの重みごとに次の移動にかかる時間を変更
 				if (map_->mapNum == 0) {
 					if (map_->map[enemy_->enemyY_][enemy_->enemyX_] == 100) {
 						enemy_->moveCount = 20;
@@ -57,7 +61,7 @@ void EnemyStateChase::Update()
 		}
 
 	}
-
+	//ここから先は違うマップに移動したと起用
 	if (enemy_->warpFlag == true) {
 		enemy_->warpCount--;
 	
@@ -123,7 +127,7 @@ void EnemyStateChase::Update()
 
 		}
 	}
-
+	//ここまでがワープ用の処理
 }
 
 void EnemyStateChase::Init(Enemy* enemy, Player* player, Map* map)
